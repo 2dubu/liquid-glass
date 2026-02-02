@@ -1,0 +1,25 @@
+{
+  "name": "liquid-glass",
+  "owner": {
+    "name": "2dubu"
+  },
+  "metadata": {
+    "description": "iOS 26 Liquid Glass toolkit for SwiftUI developers",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "liquid-glass",
+      "source": ".",
+      "description": "Liquid Glass toolkit for SwiftUI developers. API reference, migration guides, and best practices for iOS/macOS/watchOS/tvOS/visionOS 26+.",
+      "version": "1.0.0",
+      "author": {
+        "name": "2dubu"
+      },
+      "repository": "https://github.com/2dubu/liquid-glass",
+      "license": "MIT",
+      "keywords": ["swiftui", "liquid-glass", "ios26", "macos", "watchos", "tvos", "visionos", "design-system", "apple"],
+      "category": "ios-development"
+    }
+  ]
+}
