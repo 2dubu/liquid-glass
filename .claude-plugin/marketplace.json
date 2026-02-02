@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "liquid-glass",
-      "source": ".",
+      "source": "./plugins/liquid-glass",
       "description": "Liquid Glass toolkit for SwiftUI developers. API reference, migration guides, and best practices for iOS/macOS/watchOS/tvOS/visionOS 26+.",
       "version": "1.0.0",
       "author": {

@@ -17,15 +17,20 @@ A comprehensive iOS 26 Liquid Glass deep-dive toolkit for SwiftUI developers.
 
 ## Installation
 
-### Option 1: Clone to local skills
+### Option 1: Via Claude Code Marketplace (Recommended)
 ```bash
-git clone https://github.com/2dubu/liquid-glass.git ~/.claude/skills/liquid-glass
+/plugin marketplace add 2dubu/liquid-glass
+/plugin install liquid-glass@liquid-glass
 ```
 
-### Option 2: Add as git submodule
+### Option 2: Direct Install
 ```bash
-cd your-project
-git submodule add https://github.com/2dubu/liquid-glass.git .claude/skills/liquid-glass
+/plugin install 2dubu/liquid-glass
+```
+
+### Option 3: Manual Clone
+```bash
+git clone https://github.com/2dubu/liquid-glass.git ~/.claude/plugins/liquid-glass
 ```
 
 ## Usage
