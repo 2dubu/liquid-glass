@@ -2,6 +2,8 @@
 
 A comprehensive iOS 26 Liquid Glass deep-dive toolkit for SwiftUI developers.
 
+Built for developers who want ready-to-use answers and code generation for iOS 26 Liquid Glass.
+
 ## Features
 
 - **Complete API Reference** - Glass struct, glassEffect modifier, GlassEffectContainer
@@ -29,16 +31,18 @@ A comprehensive iOS 26 Liquid Glass deep-dive toolkit for SwiftUI developers.
 
 ## Usage
 
-Once installed, Claude will automatically recognize Liquid Glass related queries:
+Once installed, you can ask Claude about Liquid Glass topics:
 
 ```
-> How do I add a floating action button with Liquid Glass?
-> Migrate this iOS 17 material background to iOS 26
-> Why isn't my glass effect showing?
-> How do I create morphing animations with glass?
-> What's the difference between .regular and .clear glass?
-> Review my Liquid Glass implementation for HIG compliance
+/liquid-glass How do I add a floating action button with Liquid Glass?
+/liquid-glass Migrate this iOS 17 material background to iOS 26
+/liquid-glass Why isn't my glass effect showing?
+/liquid-glass How do I create morphing animations with glass?
+/liquid-glass What's the difference between .regular and .clear glass?
+/liquid-glass Review my Liquid Glass implementation for HIG compliance
 ```
+
+Or Claude may recognize related queries and invoke the skill automatically.
 
 ## Reference Documentation
 
@@ -120,9 +124,8 @@ GlassEffectContainer { /* glass elements */ }
 ## Requirements
 
 - Claude Code CLI
-- iOS 26+ / macOS Tahoe 26+ / visionOS 26+ project
-- Xcode 26+
-- Swift 6.0+
+- iOS 26.0+ / macOS Tahoe 26.0+ / visionOS 26.0+ project
+- Xcode 26.0+
 
 ## Resources
 
@@ -134,11 +137,11 @@ GlassEffectContainer { /* glass elements */ }
 ## Contributing
 
 PRs welcome! Please ensure:
-- Code examples are tested on iOS 26
+- Code examples are tested on iOS 26.0
 - Follow existing formatting
 - Add troubleshooting entries for new edge cases
 - Update relevant reference files
 
 ## License
 
-MIT
+MIT License
