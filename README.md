@@ -1,3 +1,5 @@
+<img width="100%" alt="image" src="https://github.com/user-attachments/assets/583ee6ce-47c7-4976-a478-55101dc73a0a" />
+
 # Liquid Glass
 
 A comprehensive iOS 26 Liquid Glass deep-dive toolkit for SwiftUI developers.
@@ -144,4 +146,4 @@ PRs welcome! Please ensure:
 
 ## License
 
-MIT License
+MIT License - see LICENSE file for details
