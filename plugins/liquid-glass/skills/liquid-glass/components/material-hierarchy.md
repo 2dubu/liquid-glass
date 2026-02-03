@@ -1,7 +1,5 @@
 # Material Hierarchy Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 iOS provides four material levels for creating visual hierarchy. Each level has different blur intensity and transparency, allowing you to create depth in your UI.

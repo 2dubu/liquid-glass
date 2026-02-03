@@ -1,7 +1,5 @@
 # Tab Bar Glass Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Tab bars in iOS 26 float above content with glass backgrounds. They can be customized for alignment and minimize behavior.

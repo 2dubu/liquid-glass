@@ -1,7 +1,5 @@
 # Glass Overlap & Layering Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Overlapping glass elements create natural depth effects. Use `zIndex()` to control layering order. Glass dynamically adapts to background content when overlapped.

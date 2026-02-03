@@ -1,7 +1,5 @@
 # Glass Animations Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Glass elements can be animated using SwiftUI's animation system. This includes expanding/collapsing, rotating, merging, and continuous loop animations.

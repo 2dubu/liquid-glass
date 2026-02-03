@@ -1,7 +1,5 @@
 # Sheet Glass Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Sheets in iOS 26 support glass backgrounds with `.presentationBackground()`. Partial height sheets are inset with glass by default.

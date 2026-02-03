@@ -1,7 +1,5 @@
 # System Glass Components (Alerts, Menus, Dialogs)
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 System components in iOS 26 automatically get glass backgrounds. Alerts, confirmation dialogs, menus, sliders, and context menus all have glass styling by default.

@@ -1,7 +1,5 @@
 # Search Glass Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Search fields in iOS 26 automatically get glass material backgrounds. The `.searchable()` modifier integrates seamlessly with NavigationStack and NavigationSplitView.

@@ -1,7 +1,5 @@
 # Scroll Edge Effects Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Scroll edge effects create depth by blurring content as it scrolls behind glass headers and footers. This creates a layered glass hierarchy.

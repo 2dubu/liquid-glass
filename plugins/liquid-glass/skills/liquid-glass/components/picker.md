@@ -1,7 +1,5 @@
 # Picker Glass Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Pickers in iOS 26 automatically get glass styling. Segmented controls use glass backgrounds, and picker wheels have translucent styling.

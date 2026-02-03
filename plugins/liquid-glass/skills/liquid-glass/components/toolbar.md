@@ -1,7 +1,5 @@
 # Toolbar Glass Component
 
-> Source: [LiquidGlass-Handbook](https://github.com/jaikrishnavj/LiquidGlass-Handbook)
-
 ## Overview
 
 Toolbars automatically get Liquid Glass treatment in iOS 26. Items are placed on a glass surface that floats above content.
