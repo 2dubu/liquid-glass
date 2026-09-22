@@ -1,191 +1,41 @@
 ---
 name: liquid-glass
-description: iOS 26 Liquid Glass expert. Use when user asks about Liquid Glass implementation, SwiftUI glassEffect, migration from iOS 17/18, morphing animations, GlassEffectContainer, or wants to generate glass-style UI components. Covers code generation, troubleshooting, HIG compliance, accessibility, performance optimization, and cross-platform differences.
+description: Implement, migrate, review, and diagnose iOS Liquid Glass interfaces in SwiftUI and UIKit. Use for system chrome, custom glass effects, transitions, accessibility, and version-specific issues in native iOS apps.
 ---
 
-# Liquid Glass Expert for iOS 26
+# Liquid Glass for iOS
 
-You are an expert in Apple's Liquid Glass design system introduced in iOS 26 at WWDC 2025. Help developers implement, migrate, and troubleshoot Liquid Glass UI in SwiftUI.
+Use public APIs to preserve readable content, functioning controls, and the app's existing deployment target. This skill covers iOS; do not extrapolate its availability guidance to other Apple platforms.
 
-## Reference Documentation
+## Choose the relevant path
 
-This skill includes comprehensive reference files in the `references/` directory:
+Identify the framework, the container that owns the surface, and whether the request is implementation, migration, review, or diagnosis. For version-sensitive behavior distinguish **Xcode/SDK**, **deployment target**, and **running iOS version/build**.
 
-| File | Description |
-|------|-------------|
-| `core-concepts.md` | Fundamental principles, navigation layer rule, variants |
-| `glass-struct.md` | Glass struct API: `.regular`, `.clear`, `.identity`, `.tint()`, `.interactive()` |
-| `glass-effect-modifier.md` | `glassEffect(_:in:isEnabled:)` modifier reference |
-| `glass-effect-container.md` | `GlassEffectContainer` for grouping and morphing |
-| `morphing-animations.md` | `@Namespace`, `glassEffectID`, `glassEffectUnion` |
-| `button-styles.md` | `.buttonStyle(.glass)`, `.buttonStyle(.glassProminent)` |
-| `system-components.md` | Sheets, alerts, pickers, toolbars, tab views |
-| `migration-guide.md` | iOS 17/18 materials to iOS 26 Liquid Glass |
-| `accessibility.md` | Reduce Transparency, VoiceOver, Dynamic Type |
-| `performance.md` | Optimization strategies, profiling tips |
-| `best-practices.md` | Five golden rules, design patterns |
-| `troubleshooting.md` | Common issues and solutions |
-| `backward-compatibility.md` | Supporting iOS 17/18 alongside iOS 26 |
-| `platform-differences.md` | iOS, macOS, watchOS, tvOS, visionOS differences |
+Read only the references needed for the request:
 
-## Component Implementation Guides
+| Request | Read |
+|---|---|
+| SwiftUI custom effects, button styles, blending, union, morphing | [SwiftUI custom effects](references/swiftui/custom-effects.md) |
+| SwiftUI navigation, toolbar, tabs, search, sheets, scroll edges | [SwiftUI system components](references/swiftui/system-components.md) |
+| UIKit custom glass, contentView, grouping, shape, interaction | [UIKit custom effects](references/uikit/custom-effects.md) |
+| UIKit navigation, bars, sheets, scrolling, hosting boundaries | [UIKit system components](references/uikit/system-components.md) |
+| Material choice, visual hierarchy, accessibility, performance | [Design and accessibility](references/design-and-accessibility.md) |
+| Older iOS support or API availability | [Compatibility](references/compatibility.md) |
+| Unexpected appearance, interaction, transitions, regressions, frame drops | [Diagnosis](references/diagnosis.md), then the relevant framework reference |
 
-**When user asks about implementing specific UI components with Liquid Glass, consult the `components/` directory for detailed implementation patterns and code examples.**
+For mixed UIKit/SwiftUI screens, identify the owner of navigation, safe areas, and each glass surface. Do not assume a hosting boundary shares the same rendering group.
 
-| File | Description |
-|------|-------------|
-| `toolbar.md` | Toolbar glass styling, grouping, dynamic toolbars |
-| `tab-bar.md` | Tab bar glass, minimize behavior, alignment |
-| `sheet.md` | Sheet presentations with glass backgrounds |
-| `search.md` | Searchable views with glass styling |
-| `picker.md` | Segmented, menu, wheel, color pickers |
-| `scroll-edge.md` | Floating headers/footers, scroll blur effects |
-| `system-alerts.md` | Alerts, dialogs, menus, context menus, sliders |
-| `glass-overlap.md` | Overlapping glass, zIndex, depth effects |
-| `material-hierarchy.md` | ultraThin, thin, regular, thick materials |
-| `animations.md` | Expanding, rotating, merging, pulse animations |
+## Implement, migrate, or review
 
-## Quick Reference
+- For standard controls, inspect system adoption and existing appearance overrides before adding custom effects.
+- Keep action handling, hit testing, shape, layout, and material configuration distinct. Use the relevant reference's public APIs and snippets.
+- Preserve older-OS behavior with availability guards. Check the actual app with its own build and test workflow, including affected controls, transitions, and accessibility settings.
+- Keep the requested scope: a review does not authorize app edits or publication.
 
-### Core API
+## Research when needed
 
-```swift
-// Basic glass effect
-.glassEffect()
-.glassEffect(.regular)
-.glassEffect(.clear)         // For media backgrounds
-.glassEffect(.identity)      // Disabled state
+Use Apple Docs MCP when available for public contracts and API availability. If keyword search misses a known API, try the exact documentation URL and inspect the installed SDK rather than inventing syntax.
 
-// With shape
-.glassEffect(in: .capsule)
-.glassEffect(in: .circle)
-.glassEffect(in: .rect(cornerRadius: 16))
+Use the disassembler for a specific unexplained system behavior or version difference. Discover the tools available in the current host; a SwiftUI-related implementation may live in SwiftUICore. An index miss does not prove API absence. Treat internal implementation as version-specific evidence, not a public contract or a production workaround.
 
-// Modifiers
-.glassEffect(.regular.tint(.blue))
-.glassEffect(.regular.interactive())  // iOS only
-.glassEffect(.regular.tint(.blue).interactive())
-
-// Button styles
-.buttonStyle(.glass)
-.buttonStyle(.glassProminent)
-```
-
-### GlassEffectContainer
-
-```swift
-GlassEffectContainer {
-    HStack {
-        Button("A") { }.glassEffect()
-        Button("B") { }.glassEffect()
-    }
-}
-```
-
-### Morphing Animations
-
-```swift
-@Namespace private var namespace
-
-GlassEffectContainer {
-    Button("Toggle") { }
-        .glassEffect()
-        .glassEffectID("btn", in: namespace)
-}
-```
-
-## The Five Golden Rules
-
-1. **Navigation Layer Only** - Glass for toolbars, FABs, tab bars. NOT for content.
-2. **No Glass on Glass** - Use `GlassEffectContainer` for multiple elements.
-3. **Don't Mix Variants** - Use same variant (`.regular` or `.clear`) throughout.
-4. **Tint for Meaning Only** - Tint conveys semantic meaning, not decoration.
-5. **Trust Automatic Accessibility** - System handles Reduce Transparency automatically.
-
-## Common Patterns
-
-### Floating Action Button
-```swift
-Button(action: add) {
-    Image(systemName: "plus")
-        .font(.title2)
-        .padding(18)
-}
-.glassEffect(.regular.tint(.blue).interactive(), in: .circle)
-```
-
-### Expandable Toolbar
-```swift
-@Namespace private var namespace
-@State private var isExpanded = false
-
-GlassEffectContainer {
-    HStack(spacing: 12) {
-        Button {
-            withAnimation(.bouncy) { isExpanded.toggle() }
-        } label: {
-            Image(systemName: isExpanded ? "xmark" : "plus")
-                .padding(16)
-        }
-        .glassEffect(.regular.interactive())
-        .glassEffectID("toggle", in: namespace)
-
-        if isExpanded {
-            ForEach(["star", "heart", "bookmark"], id: \.self) { icon in
-                Button { } label: {
-                    Image(systemName: icon)
-                        .padding(16)
-                }
-                .glassEffect(.regular.interactive())
-                .glassEffectID(icon, in: namespace)
-            }
-        }
-    }
-}
-```
-
-### Migration from iOS 17/18
-```swift
-// BEFORE (iOS 17/18)
-Button("Action") { }
-    .padding()
-    .background(.ultraThinMaterial)
-    .clipShape(Capsule())
-
-// AFTER (iOS 26)
-Button("Action") { }
-    .padding()
-    .glassEffect(in: .capsule)
-```
-
-## When to Consult References
-
-**For API & Concepts** (references/):
-- **API details** → `glass-struct.md`, `glass-effect-modifier.md`
-- **Multiple glass elements** → `glass-effect-container.md`
-- **Animations** → `morphing-animations.md`
-- **System components** → `system-components.md`
-- **Migrating old code** → `migration-guide.md`
-- **Performance issues** → `performance.md`
-- **Something not working** → `troubleshooting.md`
-- **Cross-platform** → `platform-differences.md`
-- **Supporting older iOS** → `backward-compatibility.md`
-
-**For Component Implementation** (components/):
-- **Toolbar implementation** → `components/toolbar.md`
-- **Tab bar customization** → `components/tab-bar.md`
-- **Sheet with glass** → `components/sheet.md`
-- **Search UI** → `components/search.md`
-- **Picker styling** → `components/picker.md`
-- **Scroll edge effects** → `components/scroll-edge.md`
-- **Alerts, menus, dialogs** → `components/system-alerts.md`
-- **Overlapping glass** → `components/glass-overlap.md`
-- **Material levels** → `components/material-hierarchy.md`
-- **Glass animations** → `components/animations.md`
-
-## Resources
-
-- [WWDC25 Session 323: Build a SwiftUI app with the new design](https://developer.apple.com/videos/play/wwdc2025/323/)
-- [WWDC25 Session 219: Meet Liquid Glass](https://developer.apple.com/videos/play/wwdc2025/219/)
-- [Applying Liquid Glass to custom views](https://developer.apple.com/documentation/SwiftUI/Applying-Liquid-Glass-to-custom-views)
-- [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
+Keep documented behavior, compiler results, implementation observations, and runtime reproduction distinct. If a tool or runtime is unavailable, state the resulting limit and continue with the evidence available.
