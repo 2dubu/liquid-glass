@@ -86,4 +86,4 @@ Read [AGENTS.md](AGENTS.md) before changing the repository.
 
 ## License
 
-[MIT](LICENSE)
+[Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for attribution.

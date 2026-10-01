@@ -26,6 +26,7 @@ This repository distributes one Liquid Glass skill for native iOS, shared by Cla
 - Keep the portable manifest's `extensions.com.openai.interface` equal to the Codex compatibility manifest's `interface`. Older Codex clients still need the compatibility manifest.
 - Bump the version in all three plugin manifests when shipping plugin changes. Keep plugin versions out of marketplace entries so they cannot disagree with the manifests.
 - Do not add empty component directories or duplicate the skill for each host. Preserve the README banner and keep install/update instructions aligned with the package.
+- Keep repository-root and plugin-root `LICENSE` and `NOTICE` copies identical so installed plugins retain the license and attribution. Keep the license identifier aligned across all three plugin manifests.
 - Before changing host integration, consult the current [OpenAI packaging guide](https://developers.openai.com/plugins/build/plugins), [Claude manifest reference](https://code.claude.com/docs/en/plugins-reference), and [Claude marketplace reference](https://code.claude.com/docs/en/plugins/marketplace-reference).
 
 ## Validation and publication

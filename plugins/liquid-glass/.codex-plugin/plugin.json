@@ -19,7 +19,7 @@
     ]
   },
   "repository": "https://github.com/2dubu/liquid-glass",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
     "ios",
     "swiftui",
