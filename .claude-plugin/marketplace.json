@@ -4,28 +4,13 @@
     "name": "2dubu"
   },
   "metadata": {
-    "description": "Implement and diagnose iOS Liquid Glass with SwiftUI and UIKit using focused guides and public API references.",
-    "version": "2.0.0"
+    "description": "Implement and diagnose iOS Liquid Glass with SwiftUI and UIKit using focused guides and public API references."
   },
   "plugins": [
     {
       "name": "liquid-glass",
       "source": "./plugins/liquid-glass",
       "description": "Implement and diagnose iOS Liquid Glass with SwiftUI and UIKit using focused guides and public API references.",
-      "version": "2.0.0",
-      "author": {
-        "name": "2dubu"
-      },
-      "repository": "https://github.com/2dubu/liquid-glass",
-      "license": "MIT",
-      "keywords": [
-        "ios",
-        "swiftui",
-        "uikit",
-        "liquid-glass",
-        "accessibility",
-        "debugging"
-      ],
       "category": "ios-development"
     }
   ]
