@@ -1,3 +1,5 @@
+<img width="100%" alt="image" src="https://github.com/user-attachments/assets/583ee6ce-47c7-4976-a478-55101dc73a0a" />
+
 # Liquid Glass for iOS
 
 A Markdown skill for implementing, migrating, reviewing, and diagnosing iOS Liquid Glass in **SwiftUI and UIKit**. Claude Code and Codex share the same guidance and API references.
