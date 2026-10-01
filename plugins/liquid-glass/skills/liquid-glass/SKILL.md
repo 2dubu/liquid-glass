@@ -29,7 +29,7 @@ For mixed UIKit/SwiftUI screens, identify the owner of navigation, safe areas, a
 
 ## Implement, migrate, or review
 
-- For standard controls, inspect system adoption and existing appearance overrides before adding custom effects.
+- For standard controls, inspect system adoption and existing appearance overrides before adding custom effects. An SDK upgrade can also change launch requirements, bar layout, and state initialization; use compatibility and framework guidance for the target release.
 - Keep action handling, hit testing, shape, layout, and material configuration distinct. Use the relevant reference's public APIs and snippets.
 - Preserve older-OS behavior with availability guards. Check the actual app with its own build and test workflow, including affected controls, transitions, and accessibility settings.
 - Keep the requested scope: a review does not authorize app edits or publication.

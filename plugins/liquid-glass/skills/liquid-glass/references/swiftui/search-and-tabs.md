@@ -45,6 +45,8 @@ struct LibrarySearch: View {
 }
 ```
 
+Scope visibility has its own activation policy. The default on iOS is `onTextEntry`; focusing an empty field or selecting a completion must not be treated as proof that the scope picker is visible. When scopes should appear as soon as search opens, the iOS 16.4+ `searchScopes(_:activation:_:)` overload accepts `.onSearchPresentation`. Preserve the iOS 16.0 fallback if needed, and verify the actual search placement and software/hardware keyboard path. [Automatic activation](https://developer.apple.com/documentation/swiftui/searchscopeactivation/automatic), [Explicit activation](https://developer.apple.com/documentation/swiftui/view/searchscopes(_:activation:_:)).
+
 `searchCompletion` makes selecting a suggestion replace the search text. It does not fetch or filter results; the query binding must feed the app's search logic. Keep expensive result preparation outside `body` and cancel or reject stale asynchronous results when queries change. [searchCompletion](https://developer.apple.com/documentation/swiftui/view/searchcompletion(_:)), [state and performance](state-and-performance.md).
 
 For programmatic presentation, use the iOS 17 `isPresented` binding overload of `.searchable`. Environment-based `isSearching` and `dismissSearch` must be read below the searchable modifier. Do not infer dismissal, focus, or keyboard behavior from the query being empty. [Search activation](https://developer.apple.com/documentation/swiftui/managing-search-interface-activation).
@@ -93,6 +95,8 @@ struct LibraryTabs: View {
 
 When supporting iOS 17 or earlier, guard construction of an iOS 18 tab hierarchy and preserve the app's existing tab implementation on the older branch. Do not raise the deployment target merely to remove `.tabItem`. Search role availability does not imply that iOS 18 renders the iOS 26 search-tab appearance.
 
+On iOS 27, `.prominent` gives one tab prominent visual treatment. This is separate from `.search` routing: only one tab gets the prominent treatment, and a search tab may receive it by default when no tab explicitly uses `.prominent`. Do not substitute a visual role for the search role. [TabRole.prominent](https://developer.apple.com/documentation/swiftui/tabrole/prominent).
+
 On iOS 26, tab minimization and bottom accessories are separate opt-ins. Keep their availability guards separate from `Tab`'s iOS 18 requirement, and adapt accessories using `tabViewBottomAccessoryPlacement` rather than a fixed offset. [System tab behavior](system-components.md#tabs-and-search).
 
 ## Modernize within the requested scope
@@ -101,4 +105,4 @@ The SwiftUI specialist's soft-deprecation reference and the installed SDK identi
 
 Use supported replacements in new examples. In an existing app, preserve required fallback branches and unrelated views. During a migration/review, identify the replacement and its minimum OS; during a focused bug fix, avoid silently changing the navigation architecture.
 
-Check suggestion selection, scope changes, empty results, cancellation, keyboard focus, navigation, and tab switching in the actual app. Include longer translations, larger text, and right-to-left layout when reviewing control sizing. A typecheck confirms API use, not the native search interaction on every OS build.
+Check suggestion selection, scope changes, empty-to-populated results, cancellation, keyboard focus, navigation, and tab switching in the actual app. Confirm that selecting the search tab exposes an editable field, not just the tab's content; a selected search role alone is insufficient runtime evidence. Include longer translations, larger text, and right-to-left layout when reviewing control sizing. A typecheck confirms API use, not the native search interaction on every OS build.

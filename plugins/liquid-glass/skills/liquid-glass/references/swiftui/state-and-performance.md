@@ -37,14 +37,19 @@ struct GlassCommand: Identifiable {
 
 @available(iOS 26.0, *)
 struct GlassCommandGroup: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Namespace private var namespace
     let commands: [GlassCommand]
     let highlightedID: GlassCommand.ID?
     let perform: (GlassCommand.ID) -> Void
 
     var body: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 12))
+            : AnyLayout(HStackLayout(spacing: 12))
+
         GlassEffectContainer(spacing: 20) {
-            HStack(spacing: 12) {
+            layout {
                 ForEach(commands) { command in
                     Button { perform(command.id) } label: {
                         Text(command.title)
@@ -62,6 +67,8 @@ struct GlassCommandGroup: View {
 }
 ```
 
+The example switches to a vertical layout at accessibility text sizes. `AnyLayout` changes the layout while preserving its subviews; duplicating the buttons in separate `if` branches would create different structural identities. Also test the available width and longer translations: glass adapts its material, not the app's layout policy. [AnyLayout](https://developer.apple.com/documentation/swiftui/anylayout).
+
 ## Bound the work caused by state changes
 
 Factor independently updating sections into separate `View` types with the inputs they need. Moving a section into a computed property on the same view does not create a separate update boundary. Keep view initializers cheap: decoding, file access, and expensive result preparation belong outside repeatedly constructed views. [SwiftUI performance](https://developer.apple.com/documentation/xcode/understanding-and-improving-swiftui-performance).
@@ -69,6 +76,10 @@ Factor independently updating sections into separate `View` types with the input
 For value-type inputs, avoid passing a large model when a control needs only its title and enabled state. With `@Observable`, inspect the properties actually read: looking up one item through a whole collection still depends on that collection. A computed property that performs the lookup does not narrow that dependency. Pass the row's needed value or an appropriate observable item. Adopt Observation within the task's scope and supported OS range, without requiring an unrelated app-wide migration. [Observation migration](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro).
 
 Prepare expensive filtering and sorting when their inputs change, and reuse the results during rendering. Keep caches synchronized with query, scope, and source-data changes; do not introduce a stale second source of truth. For `List` and lazy containers, preserve a constant number of top-level views per element. Filter excluded rows upstream; wrapping an empty row is not equivalent to removing it. Avoid erasing each row to `AnyView`. [ForEach](https://developer.apple.com/documentation/swiftui/foreach).
+
+### Account for the toolchain's State implementation
+
+With Xcode 27 and later, `@State` uses the `State()` macro. SwiftUI initializes its default value when it first instantiates the view; an observable class stored there is not recreated for every parent update. Keep state private and local to its owner, and pass bindings or observable references according to who needs to mutate them. This does not make expensive view initializers cheap, preserve state across a changed view identity, or make a model placed outside state acquire stable ownership. Distinguish this toolchain change from the older property-wrapper implementation when diagnosing repeated allocations. [State macro](https://developer.apple.com/documentation/swiftui/state()), [SwiftUI updates](https://developer.apple.com/documentation/updates/swiftui).
 
 ## Inspect environment and side-effect dependencies
 

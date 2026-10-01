@@ -27,7 +27,7 @@ Use tint to convey emphasis or meaning, especially a primary action. Avoid tinti
 
 ## Preserve system adaptation; verify app-owned behavior
 
-The material responds to accessibility preferences, including Reduce Transparency, Increase Contrast, and Reduce Motion. This does not establish that custom layout, colors, animations, or accessibility semantics are correct. Apple explicitly asks developers to test custom elements, colors, and animations under different settings. [Meet Liquid Glass](https://developer.apple.com/videos/play/wwdc2025/219/), [Adopting Liquid Glass](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass)
+The material responds to the person's preferred Liquid Glass appearance as well as accessibility preferences, including Reduce Transparency, Increase Contrast, and Reduce Motion. A system appearance preference and the app's `.regular`/`.clear` variant are separate inputs; do not infer one from the other. This does not establish that custom layout, colors, animations, or accessibility semantics are correct. Apple explicitly asks developers to test custom elements, colors, and animations under different settings. [Meet Liquid Glass](https://developer.apple.com/videos/play/wwdc2025/219/), [Adopting Liquid Glass](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass)
 
 Do not replace all system glass with a solid fill or another material merely because Reduce Transparency is enabled. First observe the system result and identify the remaining app-owned problem. Likewise, do not remove a custom accessibility treatment solely because the material adapts automatically.
 
@@ -36,7 +36,7 @@ Choose checks that exercise the changed behavior:
 | App-owned behavior | Verify |
 | --- | --- |
 | Custom movement or morphing | Reduce Motion, interruption, state changes, and an understandable reduced-motion result |
-| Tint or custom foreground colors | Actual media backgrounds, light/dark appearance, Increase Contrast, and Reduce Transparency |
+| Tint or custom foreground colors | Actual media backgrounds, light/dark and Liquid Glass appearance preferences, Increase Contrast, and Reduce Transparency |
 | Icon-only actions and expanding groups | VoiceOver labels, focus order, selection/expanded state, and which actions remain available |
 | Custom control layout | Dynamic Type, clipping, hit area, and content obscured by floating controls |
 

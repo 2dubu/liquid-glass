@@ -38,7 +38,7 @@ This function does not supply a size, action, accessibility label, or button sem
 - To materialize or dematerialize glass, animate assigning an effect or `nil`. Keep the effect view and its ancestors at alpha 1. Alpha on content inside `contentView` can be animated separately.
 - Removing an effect does not remove its content or disable a control. Manage availability, hit testing, and accessibility state explicitly.
 
-The effect-copy contract is declared by `UIVisualEffectView.h` in the iOS 26.5 SDK. Material transitions and tint updates follow [UIKit WWDC25, 22:15–23:20](https://developer.apple.com/videos/play/wwdc2025/284/). Alpha constraints are documented on [UIVisualEffectView](https://developer.apple.com/documentation/uikit/uivisualeffectview).
+The effect-copy contract is declared by `UIVisualEffectView.h`, including the iOS 27.1 SDK checked for this guide. Material transitions and tint updates follow [UIKit WWDC25, 22:15–23:20](https://developer.apple.com/videos/play/wwdc2025/284/). Alpha constraints are documented on [UIVisualEffectView](https://developer.apple.com/documentation/uikit/uivisualeffectview).
 
 ## Shape and nested containers
 

@@ -1,6 +1,6 @@
 # SwiftUI system components on iOS
 
-Use system containers before adding custom glass. Build against an iOS 26 SDK and inspect the app on iOS 26: standard controls and navigation adopt the new design through the framework. Existing custom backgrounds can obscure those effects. Read [compatibility](../compatibility.md) for deployment and SDK distinctions, and [Apple's adoption guide](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass) for system behavior.
+Use system containers before adding custom glass. Build against the current supported SDK and inspect the app on each supported runtime: standard controls and navigation adopt Liquid Glass from iOS 26, while later releases add their own behavior. Existing custom backgrounds can obscure those effects. Read [compatibility](../compatibility.md) for deployment and SDK distinctions, and [Apple's adoption guide](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass) for system behavior.
 
 ## Navigation and toolbars
 
@@ -9,6 +9,21 @@ Start with `NavigationStack`, a real scrollable content view, and semantic toolb
 Use `ToolbarItemGroup` for related actions. Use `ToolbarSpacer(.fixed, placement:)` to separate groups that should not share one background, or `.flexible` when the purpose is flexible space. A spacer is `ToolbarContent`, so put it directly in the `.toolbar` builder beside items. `ToolbarItem { ToolbarSpacer(...) }` fails because the item requires view content. See [ToolbarSpacer](https://developer.apple.com/documentation/swiftui/toolbarspacer).
 
 `sharedBackgroundVisibility(_:)` belongs to `ToolbarContent`. Hiding an item's shared background also separates it into its own grouping; it is not a view-level opacity adjustment. Use it for a concrete design requirement, and check the resulting grouping. See [sharedBackgroundVisibility](https://developer.apple.com/documentation/swiftui/toolbarcontent/sharedbackgroundvisibility(_:)).
+
+### Additional toolbar controls in iOS 27
+
+Keep these APIs behind iOS 27 availability checks; they are not prerequisites for iOS 26 glass:
+
+| Need | API and behavior |
+|---|---|
+| Prefer an action when width is constrained | `ToolbarContent.visibilityPriority(_:)`; lower-priority items move into overflow first. |
+| Keep secondary actions in overflow | `ToolbarOverflowMenu` in the toolbar builder; its contents always belong to the overflow menu. |
+| Pin a trailing action | `.topBarPinnedTrailing`; even pinned items can enter overflow when search is active and space is insufficient. |
+| Minimize navigation chrome while scrolling | `toolbarMinimizationBehavior(_:for:)` with `.navigationBar`; an integrated top tab bar also minimizes. |
+
+Navigation-bar minimization and iOS 26 tab-bar minimization are different APIs. Navigation minimization adjusts the safe area by default; inspect `toolbarMinimizationSafeAreaAdjustment(_:for:)` only when that adjustment conflicts with the intended layout. Test overflow actions, active search, and changing width together. [Visibility priority](https://developer.apple.com/documentation/swiftui/toolbarcontent/visibilitypriority(_:)), [Overflow menu](https://developer.apple.com/documentation/swiftui/toolbaroverflowmenu), [Pinned placement](https://developer.apple.com/documentation/swiftui/toolbaritemplacement/topbarpinnedtrailing), [Navigation minimization](https://developer.apple.com/documentation/swiftui/view/toolbarminimizationbehavior(_:for:)).
+
+The iOS 27.1 beta APIs also allow vertical bars in supported device contexts. Read `toolbarVerticalEdge` to position app-owned controls relative to the system's preferred edge; it does not prove a bar is currently visible. Keep `toolbarVerticalBehavior(.disabled)` a stable layout choice for screens that need horizontal bars, rather than toggling it to hide chrome. Use toolbar visibility APIs for visibility. Check the current beta SDK and runtime before adopting these APIs. [Vertical edge](https://developer.apple.com/documentation/swiftui/environmentvalues/toolbarverticaledge), [Vertical behavior](https://developer.apple.com/documentation/swiftui/view/toolbarverticalbehavior(_:)).
 
 ## Scroll edges and custom bars
 

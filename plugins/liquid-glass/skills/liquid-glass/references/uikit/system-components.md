@@ -2,6 +2,10 @@
 
 Start by running the app with the current SDK and target runtime, then identify which container owns each navigation bar, toolbar, tab bar, and scroll view. Standard UIKit components adopt the new appearance when built with the supporting SDK and run on iOS 26 or later. This does not require raising the app's minimum deployment target. [Adopting Liquid Glass](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass), [Build a UIKit app with the new design](https://developer.apple.com/videos/play/wwdc2025/284/).
 
+## Check the iOS 27 launch requirement
+
+Before investigating appearance after an SDK upgrade, confirm the app adopts UIKit's scene-based life cycle. Apple documents that apps built with the latest SDK must use it to launch on iOS 27. Configure scenes through the app's scene manifest or dynamic scene configuration, and move window/UI life-cycle work to its scene owner. This is an SDK-linked launch requirement, not a reason to raise the deployment target or add custom glass. [UIKit updates](https://developer.apple.com/documentation/updates/uikit), [Scene migration](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle).
+
 ## Keep system bars under their container's control
 
 | UI | Public integration point | Review when migrating |
@@ -48,6 +52,10 @@ This registers the visual relationship; the app still owns overlay layout, safe-
 Use `UITabBarController` for a system tab bar. On iOS 26, `tabBarMinimizeBehavior` can opt into scroll-driven minimization, and `UITabAccessory(contentView:)` provides a bottom accessory. A minimizing tab bar changes available space; adapt accessory content using the public `tabAccessoryEnvironment` trait instead of looking for private subviews or fixed tab-bar heights. Test scroll direction changes and accessory transitions in the actual container. [UIKit WWDC25, 2:31–3:35](https://developer.apple.com/videos/play/wwdc2025/284/).
 
 Do not add an independent glass effect over the tab bar or hard-code insets from a screenshot. A SwiftUI `TabView`, UIKit tab controller, and custom app tab strip have different owners and adaptation paths even if they look similar.
+
+## Vertical bars in the iOS 27.1 beta SDK
+
+Supported device contexts can place bar content vertically. Continue to use container-owned items and safe areas instead of assuming all navigation and toolbar controls occupy the top or bottom edge. `preferredVerticalBarBehavior` can opt a controller into a stable horizontal-bar layout when the UI requires it; hiding bars for a screen remains a visibility concern. Avoid repeatedly toggling the layout preference with transient screen state. Recheck beta availability and behavior on the target device. [preferredVerticalBarBehavior](https://developer.apple.com/documentation/uikit/uiviewcontroller/preferredverticalbarbehavior), [UIKit updates](https://developer.apple.com/documentation/updates/uikit).
 
 ## UIKit and SwiftUI hosting
 

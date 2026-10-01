@@ -8,8 +8,8 @@ Record the expected and observed behavior, the triggering interaction, and wheth
 
 - iOS version and build; device or Simulator runtime; Xcode/SDK; deployment target.
 - SwiftUI, UIKit, or a hosting boundary; standard component or custom effect; the view that owns the bar, presentation, or background.
-- Relevant glass containers and ancestry, safe areas, scroll views, clipping, opacity, transforms, and custom backgrounds.
-- Glass variant, tint, interaction configuration, and relevant appearance/accessibility settings.
+- Relevant glass containers and ancestry, safe areas, scroll views, clipping, opacity, transforms, and custom backgrounds; on supported devices, horizontal versus vertical bars.
+- Glass variant, tint, interaction configuration, the system's Liquid Glass appearance preference, and relevant accessibility settings.
 
 Inspect existing code and the environment before asking for information that is already available. Reduce the scene to public APIs while preserving the suspected boundary. Keep the failing and working versions comparable; removing a navigation or hosting container may remove the cause.
 
@@ -18,10 +18,12 @@ Inspect existing code and the environment before asking for information that is 
 | Symptom | Useful first check |
 | --- | --- |
 | Code does not compile | Read the installed SDK declaration, exact argument labels, availability, and target platform |
+| App fails to launch after an SDK upgrade | Check the iOS 27 scene-life-cycle requirement before investigating rendering |
 | Effect is missing or unexpectedly opaque | Identify the actual component owner, custom backgrounds, clipping/opacity, and active accessibility settings |
 | Nearby effects look inconsistent | Inspect their sampling/grouping scope; compare sibling grouping with independent effects |
 | Nested or overlapping effects look wrong | Distinguish design overlap, ordinary UIKit glass nesting, and glass-container grouping |
 | Morphing does not occur | Compare container scope, identifiers, namespace, spacing, view insertion/removal, and chosen transition |
+| Search tab selects but no editable field appears | Isolate the searchable owner, surrounding modifiers, and query/results updates; compare SDK and runtime combinations before changing tab roles |
 | State or focus resets when styling changes | Look for conditional view replacement and unstable model IDs before changing effect IDs |
 | Touch feedback does not occur | Separate action/gesture delivery and hit testing from the material's interactive configuration |
 | A menu, sheet, or bar differs by OS | Reproduce with the standard component and record both runtime builds before adding a workaround |
@@ -33,7 +35,7 @@ For SwiftUI, use [state and performance](swiftui/state-and-performance.md) to in
 
 ## Resolve the public contract and SDK
 
-Use available Apple documentation capabilities to find the relevant API, then read its exact page. Prefer the specific API/article and the applicable WWDC explanation to a broad search snippet. Keep current documentation separate from a dated presentation.
+Use available Apple documentation capabilities to find the relevant API, then read its exact page. Prefer the specific API/article and the applicable WWDC explanation to a broad search snippet. Keep current documentation separate from a dated presentation. Review the applicable release notes and SDK-linked changes; an old compatibility key or launch assumption may no longer apply even when the glass API itself is unchanged.
 
 Discover the tools exposed in the current environment instead of assuming a server prefix or requiring a particular MCP installation. If documentation search returns no results, try the known official page URL. If an article response omits code or inline symbols, consult the Apple page and installed SDK rather than reconstructing missing syntax.
 
