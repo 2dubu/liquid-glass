@@ -1,6 +1,6 @@
 {
   "name": "liquid-glass",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Implement and diagnose iOS Liquid Glass with SwiftUI and UIKit using focused guides and public API references.",
   "author": {
     "name": "2dubu"

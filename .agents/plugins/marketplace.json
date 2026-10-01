@@ -1,0 +1,20 @@
+{
+  "name": "liquid-glass",
+  "interface": {
+    "displayName": "Liquid Glass for iOS"
+  },
+  "plugins": [
+    {
+      "name": "liquid-glass",
+      "source": {
+        "source": "local",
+        "path": "./plugins/liquid-glass"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
