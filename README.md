@@ -80,37 +80,9 @@ Invoke `/liquid-glass:liquid-glass` in Claude Code or `$liquid-glass:liquid-glas
 
 The skill folder contains only Markdown, with short code snippets inside the relevant guides. Plugin manifests live outside that folder and provide packaging for Claude Code and Codex.
 
-Apple Docs MCP and an iOS framework disassembler can support investigations when available. The plugin does not bundle an MCP server or require either tool. Guidance links to primary sources and distinguishes documented behavior from implementation observations and inference.
-
-## Repository structure
-
-| Path | Purpose |
-|---|---|
-| `AGENTS.md` | Shared repository maintenance instructions |
-| `.claude-plugin/marketplace.json` | Claude Code marketplace catalog |
-| `.agents/plugins/marketplace.json` | Codex marketplace catalog and installation policy |
-| `plugins/liquid-glass/plugin.json` | Portable Agent Plugins manifest with OpenAI presentation metadata |
-| `plugins/liquid-glass/.claude-plugin/plugin.json` | Claude Code plugin manifest |
-| `plugins/liquid-glass/.codex-plugin/plugin.json` | Compatibility manifest for Codex clients that do not read the portable metadata |
-| `plugins/liquid-glass/skills/liquid-glass/` | The single shared skill and its Markdown references |
-
-Both catalogs resolve the same plugin directory. Host-specific manifests preserve compatibility without separate copies of the skill.
-
 ## Contribute
 
-Read [AGENTS.md](AGENTS.md) before changing the repository. [Codex](https://learn.chatgpt.com/docs/agent-configuration/agents-md) and [current Claude Code](https://code.claude.com/docs/en/memory#agentsmd) can read it directly; no `CLAUDE.md` bridge is included. Claude Code requires v2.1.277 or later for direct loading and, by default, prefers a `CLAUDE.md` or `CLAUDE.local.md` in the working directory or its ancestors when one exists. The linked guide explains the Project instructions setting. These are contributor instructions; the installed plugin's entry point is `SKILL.md`.
-
-Keep guidance focused on decisions that matter in an app. Link technical claims to Apple documentation, check snippets against the intended SDK and deployment target, and verify affected behavior in the target app. A successful compile does not establish rendering, accessibility, or device performance.
-
-Validate packaging changes from the repository root:
-
-```sh
-claude plugin validate . --strict
-claude plugin validate ./plugins/liquid-glass --strict
-git diff --check
-```
-
-Keep shared metadata and versions aligned across the three plugin manifests. Bump the plugin version when changing shipped plugin files so cached installs can receive the update.
+Read [AGENTS.md](AGENTS.md) before changing the repository.
 
 ## License
 
