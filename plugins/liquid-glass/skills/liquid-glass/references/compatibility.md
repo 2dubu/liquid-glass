@@ -24,6 +24,18 @@ Do not raise the deployment target to 26 merely to adopt Liquid Glass conditiona
 
 These are introduction versions, not a claim that every later build looks or behaves identically. Recheck the SDK declaration when using an overload not listed here. This skill makes no compatibility claim for macOS, tvOS, watchOS, or visionOS.
 
+### APIs used alongside Liquid Glass
+
+| API | iOS introduced | Source |
+|---|---|---|
+| `.searchSuggestions`, `.searchScopes(_:scopes:)` | 16.0 | [Suggestions](https://developer.apple.com/documentation/swiftui/view/searchsuggestions(_:)), [Scopes](https://developer.apple.com/documentation/swiftui/view/searchscopes(_:scopes:)) |
+| SwiftUI Observation integration | 17.0 | [Observation migration](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro) |
+| `.searchable(text:isPresented:placement:prompt:)` | 17.0 | [Presentation binding](https://developer.apple.com/documentation/swiftui/view/searchable(text:ispresented:placement:prompt:)) |
+| `Tab`, `TabRole.search` | 18.0 | [Tab](https://developer.apple.com/documentation/swiftui/tab), [Search role](https://developer.apple.com/documentation/swiftui/tabrole/search) |
+| `AnimatableValues` | 26.0 | [AnimatableValues](https://developer.apple.com/documentation/swiftui/animatablevalues) |
+
+Do not conflate these introduction versions with the runtime's glass appearance. Keep the appropriate older-OS path when adopting the [search/tab examples](swiftui/search-and-tabs.md). A compiler macro such as `@Animatable` also requires a toolchain that supplies it; check the macro and generated code rather than inferring its deployment requirement from `AnimatableValues` alone.
+
 ## Structure the fallback at the call site
 
 Put the actual newer API inside an availability branch, or put a newer-OS component behind an annotated type/function and guard its construction. A computed Bool such as `supportsGlass` is not a compiler availability check.
@@ -59,4 +71,4 @@ Choose the fallback by UI purpose. A standard bordered button may need no blur a
 
 Compile against the intended deployment target, then run the new and fallback paths on representative supported OS versions. Check interaction and state preservation, not just the absence of a crash. Record unavailable runtimes as untested. A 26.5 SDK build running on 27.0 does not validate APIs introduced only in a 27 SDK.
 
-Public declarations above were checked with Xcode 26.5 / iOS SDK 26.5 and Apple documentation on 2026-09-22. Recheck availability when adopting newer SDK APIs.
+The core Liquid Glass availability table was checked with Xcode 26.5 / iOS SDK 26.5 and Apple documentation on 2026-09-22. The companion API table was checked against Apple documentation and the iOS 27.1 SDK on 2026-10-01. Recheck availability when adopting newer overloads; these checks do not establish runtime behavior.

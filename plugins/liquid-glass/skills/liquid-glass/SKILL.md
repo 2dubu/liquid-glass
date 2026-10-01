@@ -17,6 +17,8 @@ Read only the references needed for the request:
 |---|---|
 | SwiftUI custom effects, button styles, blending, union, morphing | [SwiftUI custom effects](references/swiftui/custom-effects.md) |
 | SwiftUI navigation, toolbar, tabs, search, sheets, scroll edges | [SwiftUI system components](references/swiftui/system-components.md) |
+| SwiftUI search suggestions/scopes, tab selection, modern search/tab examples | [SwiftUI search and tabs](references/swiftui/search-and-tabs.md) |
+| SwiftUI state resets, dynamic action IDs, unnecessary updates, list/scroll hitches | [SwiftUI state and performance](references/swiftui/state-and-performance.md) |
 | UIKit custom glass, contentView, grouping, shape, interaction | [UIKit custom effects](references/uikit/custom-effects.md) |
 | UIKit navigation, bars, sheets, scrolling, hosting boundaries | [UIKit system components](references/uikit/system-components.md) |
 | Material choice, visual hierarchy, accessibility, performance | [Design and accessibility](references/design-and-accessibility.md) |

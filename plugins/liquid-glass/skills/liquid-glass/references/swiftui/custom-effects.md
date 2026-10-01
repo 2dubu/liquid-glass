@@ -37,6 +37,8 @@ Do not invent an `isEnabled:` argument on `glassEffect`. Use the declared signat
 
 Do not put every surface in one global container. Group the effects that need to interact, then measure the real composition. A container is not a guarantee of a particular frame rate; too many containers or independent effects can still be expensive. Apple's [custom-effects guide](https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views) recommends limiting simultaneous effects and profiling rendering.
 
+For changing tint or material on an existing control, preserve its structural identity by varying the modifier's argument. For dynamic action collections, distinguish stable `ForEach` IDs from glass effect IDs and union IDs. Read [state and performance](state-and-performance.md) for an example and the cases where insertion/removal is intentional.
+
 ## Make motion intentional and cancellable
 
 Use `accessibilityReduceMotion` to adjust app-owned transitions while preserving the available actions and understandable state. For example, an expanding action group can select an identity glass transition and disable its explicit animation when Reduce Motion is enabled. This does not establish that every system-provided animation is absent. See [accessibilityReduceMotion](https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion).
@@ -79,6 +81,12 @@ struct GlassActions: View {
 
 If another design requires async repetition, honor task cancellation. `try? await Task.sleep(...)` inside `while true` discards cancellation and can leave the body running after the view disappears. Exit on cancellation or propagate it through an appropriate task boundary. Duration alone does not explain rendering jank. See [Task.sleep](https://developer.apple.com/documentation/swift/task/sleep(for:tolerance:clock:)).
 
+## Custom shape interpolation
+
+When a custom `Shape` needs its own animatable properties, prefer `@Animatable` synthesis with a supporting toolchain. Mark non-animating stored properties with `@AnimatableIgnored`. This is separate from the system's glass morphing APIs; ordinary `glassEffectID` transitions do not require a custom `Animatable` conformance. [Animatable macro](https://developer.apple.com/documentation/swiftui/animatable()).
+
+Implement `animatableData` explicitly when interpolation needs custom setter behavior such as clamping or updating a derived value. `AnimatableValues` requires iOS 26; retain an appropriate `AnimatablePair` implementation for earlier deployment targets. The macro's compiler/SDK support and the availability of the generated types are separate checks. [AnimatableValues](https://developer.apple.com/documentation/swiftui/animatablevalues), [AnimatablePair](https://developer.apple.com/documentation/swiftui/animatablepair).
+
 ## Diagnose before changing effects
 
 | Symptom | First check |
@@ -87,6 +95,7 @@ If another design requires async repetition, honor task cancellation. `try? awai
 | Rounded rectangle looks like a capsule | The shape supplied to `glassEffect`, not just the source view's shape. |
 | Shapes overlap but do not perform the intended merge | Shared container, layout geometry, and container spacing. |
 | Insertion has the wrong transition | Stable IDs, shared namespace, actual hierarchy change, and the `GlassEffectTransition` value. |
+| A tint change resets control state | Conditional view replacement, changing model IDs, or a recreated parent/namespace; see [state and performance](state-and-performance.md). |
 | Glass looks wrong only over some content | Underlay, contrast, appearance/accessibility settings, and any extra background or opacity modifier. |
 | Motion continues after dismissal | Task cancellation and ownership before assuming a rendering bug. |
 

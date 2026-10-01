@@ -27,6 +27,8 @@ Do not use a hard-coded 60pt or 80pt content padding as a general solution for a
 
 ## Tabs and search
 
+For complete examples of suggestions, scopes, and typed tab selection, read [search and tabs](search-and-tabs.md). It also covers replacing older API forms without dropping support for earlier iOS versions.
+
 For tab-based navigation, use `TabView` and the standard tab APIs. `.tabViewStyle(.tabBarOnly)` chooses a tab-bar presentation where possible; it does not remove the selected tab's content and is available from iOS 18. See [TabBarOnlyTabViewStyle](https://developer.apple.com/documentation/swiftui/tabbaronlytabviewstyle).
 
 When search belongs to a tab, give that tab the `.search` role. This is a semantic role, not merely a magnifying-glass icon. Searchable tab views use the role to route search; without a designated search tab, search state can reset as selection changes. See [TabRole.search](https://developer.apple.com/documentation/swiftui/tabrole/search).

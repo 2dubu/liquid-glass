@@ -42,8 +42,16 @@ Choose checks that exercise the changed behavior:
 
 For custom SwiftUI animation, read `accessibilityReduceMotion`; Apple specifically advises avoiding large animations, especially simulated three-dimensional motion, when it is enabled. The framework's glass animation and an app's explicit transforms are separate things to assess. [accessibilityReduceMotion](https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion)
 
+## Keep action labels localizable
+
+Preserve localization context in app-owned labels. SwiftUI localized literals are appropriate for fixed UI copy; use `LocalizedStringKey` or `LocalizedStringResource` when a model carries localizable action titles, with an initializer supported by the deployment target. Do not mistake user content for a localization key or resolve all labels eagerly into `String`. For packages/frameworks, use the correct resource bundle with APIs supported by the toolchain. [LocalizedStringKey](https://developer.apple.com/documentation/swiftui/localizedstringkey), [LocalizedStringResource](https://developer.apple.com/documentation/foundation/localizedstringresource).
+
+Review longer translations and right-to-left layout alongside Dynamic Type. Use semantic leading/trailing alignment and avoid fixed text bounds that clip labels. A shorter translation should not require a different control identity. The [search examples](swiftui/search-and-tabs.md) keep UI scope labels separate from data-source strings.
+
 ## Make performance claims from measurements
 
 Group related custom effects as documented. Avoid multiplying containers or applying effects indiscriminately; both excessive containers and effects outside containers can increase rendering cost. The cited guidance gives no fixed maximum number of glass views or morphing elements; do not invent one. [Applying Liquid Glass to custom views](https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views)
+
+For SwiftUI hitches, also inspect [state and performance](swiftui/state-and-performance.md). Unnecessary view updates and result computation need different corrections from expensive material rendering.
 
 For a performance investigation, compare the same interaction, content, and device before and after the change. Record the iOS build, toolchain, device, measurement method, and relevant accessibility state. Use representative physical iPhones for claims about iPhone responsiveness or energy. A simulator result, successful compile, or decompiled implementation is not a device performance measurement.

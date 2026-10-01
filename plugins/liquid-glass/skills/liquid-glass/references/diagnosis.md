@@ -22,11 +22,14 @@ Inspect existing code and the environment before asking for information that is 
 | Nearby effects look inconsistent | Inspect their sampling/grouping scope; compare sibling grouping with independent effects |
 | Nested or overlapping effects look wrong | Distinguish design overlap, ordinary UIKit glass nesting, and glass-container grouping |
 | Morphing does not occur | Compare container scope, identifiers, namespace, spacing, view insertion/removal, and chosen transition |
+| State or focus resets when styling changes | Look for conditional view replacement and unstable model IDs before changing effect IDs |
 | Touch feedback does not occur | Separate action/gesture delivery and hit testing from the material's interactive configuration |
 | A menu, sheet, or bar differs by OS | Reproduce with the standard component and record both runtime builds before adding a workaround |
-| Stuttering or excess rendering cost | Capture a repeatable interaction and profile it; vary one cause at a time |
+| Stuttering or excess rendering cost | Distinguish expensive bodies, frequent updates, list identity/layout work, and material rendering; vary one cause at a time |
 
 These are investigation paths, not diagnoses. A symptom alone does not establish that a container, `zIndex`, forced background, or clipping modifier will fix it.
+
+For SwiftUI, use [state and performance](swiftui/state-and-performance.md) to inspect dependency scope, high-frequency environment writes, result preparation, and dynamic row identity. Profile the actual app before treating an `@Observable` migration or another glass container as the fix.
 
 ## Resolve the public contract and SDK
 

@@ -44,6 +44,7 @@ Invoke `/liquid-glass:liquid-glass` in Claude Code or `$liquid-glass:liquid-glas
 [SKILL.md](plugins/liquid-glass/skills/liquid-glass/SKILL.md) selects the references relevant to the request:
 
 - SwiftUI custom effects and system components
+- SwiftUI search/tab examples, stable identity, state updates, and performance diagnosis
 - UIKit custom effects and system components
 - Design, accessibility, and performance decisions
 - Availability and older-iOS compatibility
